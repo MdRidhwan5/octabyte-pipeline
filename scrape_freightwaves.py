@@ -17,8 +17,7 @@ def scrape_headlines():
             if text:
                 f.write(text + '\n')
 
-    print(f"✅ Scraped headlines saved to {filename}")
+    print(f"Scraped headlines saved to {filename}")
 
 if __name__ == "__main__":
     scrape_headlines()
-    
