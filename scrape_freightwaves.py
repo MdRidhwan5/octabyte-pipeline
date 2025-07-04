@@ -1,23 +1,19 @@
-import requests
-from bs4 import BeautifulSoup
+import feedparser
 from datetime import datetime
 
-def scrape_headlines():
-    url = "https://www.freightwaves.com"
-    r = requests.get(url)
-    soup = BeautifulSoup(r.text, 'html.parser')
+# RSS feed URL for FreightWaves
+FEED_URL = "https://www.freightwaves.com/feed"
 
-    headlines = soup.find_all('h2')  # You can change this to match correct tag
-    today = datetime.today().strftime('%Y-%m-%d')
-    filename = f'freightwaves_{today}.txt'
+# Parse RSS
+feed = feedparser.parse(FEED_URL)
 
-    with open(filename, 'w', encoding='utf-8') as f:
-        for h in headlines:
-            text = h.get_text(strip=True)
-            if text:
-                f.write(text + '\n')
+# Prepare output file
+date_str = datetime.now().strftime("%Y-%m-%d")
+filename = f"freightwaves_{date_str}.txt"
 
-    print(f"Scraped headlines saved to {filename}")
+# Write article titles to file
+with open(filename, "w", encoding="utf-8") as f:
+    for entry in feed.entries:
+        f.write(entry.title + "\n")
 
-if __name__ == "__main__":
-    scrape_headlines()
+print(f"Scraped {len(feed.entries)} headlines to {filename}")
