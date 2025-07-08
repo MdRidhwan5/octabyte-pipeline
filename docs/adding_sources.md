@@ -55,5 +55,3 @@ python upload_to_s3.py newsource_2025-07-08.json newsource
 * Respect `robots.txt` and terms of service.
 * Never commit `.env` or AWS keys.
 * Validate that new crawlers don’t duplicate existing entries.
-
-````
