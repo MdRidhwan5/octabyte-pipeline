@@ -27,7 +27,8 @@ graph TD
     D --> E[CloudWatch Logs]
     E --> F[CloudWatch Alarm - Error threshold]
     G[EventBridge - Daily Scheduler] --> D
-->|PutObject| S3
+    C -->|PutObject| S3[(S3 Bucket)]
+    F -->|PutObject| S3
 ````
 
 ---
