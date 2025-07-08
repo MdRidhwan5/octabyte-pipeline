@@ -20,19 +20,13 @@ This document outlines the architecture and key components of the web crawling p
 ## 📐 Data Flow
 
 ```mermaid
-flowchart TD
-    subgraph Local Crawlers
-        A[Scraper scripts] --> B[Generate JSON]
-        B --> C[upload_to_s3.py]
-    end
-
-    subgraph AWS Lambda (newsapi)
-        D[Lambda function] --> E[Get news via API]
-        E --> F[Push to S3]
-    end
-
-    subgraph Monitoring
-        G[EventBridge Daily Trigger] --> D
+graph TD
+    A[Crawlers: BeautifulSoup/Selenium] --> B[Raw JSON]
+    B --> C[S3: octabyte-data-pipeline/raw/source/date]
+    A --> D[AWS Lambda (newsapi)]
+    D --> E[CloudWatch Logs]
+    E --> F[CloudWatch Alarm (Errors >= 1)]
+    G[EventBridge Scheduler] --> D
         D --> H[CloudWatch Logs]
         H --> I[Alarm if Errors >= 1]
     end
