@@ -94,7 +94,11 @@ python upload_to_s3.py gnosis_2025-07-07.json gnosisfreight
 1. Add a new script inside `crawlers/` (e.g., `newsite.py`).
 2. Make the script return data as a dict/list and save it as `YYYY-MM-DD.json`.
 3. Run:
+
+```bash
 python upload_to_s3.py newfile.json newsource
+```
+
 4. (Optional) Add the script to a Lambda function or Airflow DAG.
 
 ---
