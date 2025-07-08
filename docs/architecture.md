@@ -21,18 +21,13 @@ This document outlines the architecture and key components of the web crawling p
 
 ```mermaid
 graph TD
-    A[Crawlers: BeautifulSoup/Selenium] --> B[Raw JSON]
-    B --> C[S3: octabyte-data-pipeline/raw/source/date]
-    A --> D[AWS Lambda (newsapi)]
+    A[Crawlers - BeautifulSoup / Selenium] --> B[Raw JSON Output]
+    B --> C[S3 - octabyte-data-pipeline/raw/source/date]
+    A --> D[Lambda - NewsAPI Crawler]
     D --> E[CloudWatch Logs]
-    E --> F[CloudWatch Alarm (Errors >= 1)]
-    G[EventBridge Scheduler] --> D
-        D --> H[CloudWatch Logs]
-        H --> I[Alarm if Errors >= 1]
-    end
-
-    C -->|PutObject| S3[(S3 Bucket)]
-    F -->|PutObject| S3
+    E --> F[CloudWatch Alarm - Error threshold]
+    G[EventBridge - Daily Scheduler] --> D
+->|PutObject| S3
 ````
 
 ---
